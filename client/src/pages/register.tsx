@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, Link } from 'react-router-dom';
+import { APP_CONFIG } from '@/config';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -65,7 +66,7 @@ export default function RegisterPage() {
                             <path d="M4 9h12" />
                             <path d="M4 16h12" />
                         </svg>
-                        <h1 className="text-2xl font-bold">Join TaskFlow</h1>
+                        <h1 className="text-2xl font-bold">Join {APP_CONFIG.APP_NAME}</h1>
                         <p className="text-gray-600">
                             Create an account to start managing tasks efficiently
                         </p>

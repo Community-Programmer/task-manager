@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { APP_CONFIG } from '@/config';
 import { Button } from '@/components/ui/button';
 import { useAppSelector, useAppDispatch } from '@/hooks/reduxHooks';
 import type { RootState } from '@/store';
@@ -26,7 +27,7 @@ export function Logo() {
                 <path d="M4 9h12" />
                 <path d="M4 16h12" />
             </svg>
-            <span className="text-xl font-bold text-gray-900">TaskFlow</span>
+            <span className="text-xl font-bold text-gray-900">{APP_CONFIG.APP_NAME}</span>
         </div>
     );
 }

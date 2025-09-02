@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_CONFIG } from '@/config';
 import type { RootState } from '../types';
 
-const API_URL = 'http://localhost:3000/api/tasks';
+const API_URL = `${API_CONFIG.BASE_URL}/tasks`;
 
 // Types
 export interface Task {

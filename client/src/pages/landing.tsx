@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/navbar';
+import { APP_CONFIG } from '@/config';
 
 export default function LandingPage() {
     return (
@@ -167,7 +168,7 @@ export default function LandingPage() {
                                     <path d="M4 9h12" />
                                     <path d="M4 16h12" />
                                 </svg>
-                                <span className="text-xl font-bold text-gray-900">TaskFlow</span>
+                                <span className="text-xl font-bold text-gray-900">{APP_CONFIG.APP_NAME}</span>
                             </div>
                             <p className="text-gray-600">
                                 Making task management simple and efficient.
@@ -200,7 +201,7 @@ export default function LandingPage() {
                     </div>
                     <div className="border-t border-gray-200 mt-12 pt-8">
                         <p className="text-center text-gray-600">
-                            © 2025 TaskFlow. All rights reserved.
+                            © 2025 {APP_CONFIG.APP_NAME}. All rights reserved.
                         </p>
                     </div>
                 </div>

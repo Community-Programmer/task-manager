@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_CONFIG, APP_CONFIG } from '@/config';
 
-const API_URL = 'http://localhost:3000/api/auth';
+const API_URL = API_CONFIG.BASE_URL + '/auth';
 
 // Types
 interface User {
@@ -20,11 +21,13 @@ interface AuthState {
 
 // Initial state
 const initialState: AuthState = {
-  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null,
-  token: localStorage.getItem('token'),
+  user: localStorage.getItem(APP_CONFIG.STORAGE_KEYS.USER_DATA) 
+    ? JSON.parse(localStorage.getItem(APP_CONFIG.STORAGE_KEYS.USER_DATA)!) 
+    : null,
+  token: localStorage.getItem(APP_CONFIG.STORAGE_KEYS.AUTH_TOKEN),
   isLoading: false,
   error: null,
-  isAuthenticated: Boolean(localStorage.getItem('token')),
+  isAuthenticated: Boolean(localStorage.getItem(APP_CONFIG.STORAGE_KEYS.AUTH_TOKEN)),
 };
 
 // Async thunks
@@ -45,9 +48,11 @@ export const login = createAsyncThunk(
   async (userData: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${API_URL}/login`, userData);
-      localStorage.setItem('token', response.data.token);
       const data = response.data;
-      localStorage.setItem('token', data.token);
+      localStorage.setItem(APP_CONFIG.STORAGE_KEYS.AUTH_TOKEN, data.token);
+      if (data.user) {
+        localStorage.setItem(APP_CONFIG.STORAGE_KEYS.USER_DATA, JSON.stringify(data.user));
+      }
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Login failed');
@@ -61,8 +66,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem(APP_CONFIG.STORAGE_KEYS.AUTH_TOKEN);
+      localStorage.removeItem(APP_CONFIG.STORAGE_KEYS.USER_DATA);
       state.user = null;
       state.token = null;
       state.error = null;
@@ -98,7 +103,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.isAuthenticated = true;
         // Store user data in localStorage
-        localStorage.setItem('user', JSON.stringify(action.payload.user));
+        localStorage.setItem(APP_CONFIG.STORAGE_KEYS.USER_DATA, JSON.stringify(action.payload.user));
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
