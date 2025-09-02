@@ -6,7 +6,7 @@
 // API configuration
 export const API_CONFIG = {
   // Base URL for API requests
-  BASE_URL: 'http://localhost:3000/api',
+  BASE_URL: 'https://task-manager-cqs1.onrender.com/api',
   
   // API timeout in milliseconds (10 seconds)
   TIMEOUT: 10000,
