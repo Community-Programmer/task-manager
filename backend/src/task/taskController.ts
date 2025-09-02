@@ -9,11 +9,22 @@ export const createTask = async (req: AuthRequest, res: Response, next: NextFunc
 		const { title, description, status, dueDate, priority } = req.body;
 		const userId = req.user?.userId;
 		if (!userId) return next(createError(401, "Unauthorized"));
+
+		const formattedDueDate = dueDate ? new Date(dueDate).toISOString() : undefined;
+		
 		const task = await prisma.task.create({
-			data: { title, description, status, dueDate, priority, userId },
+			data: { 
+				title, 
+				description, 
+				status, 
+				dueDate: formattedDueDate, 
+				priority, 
+				userId 
+			},
 		});
 		res.status(201).json(task);
 	} catch (err) {
+        console.error(err);
 		return next(createError(500, "Failed to create task"));
 	}
 };
@@ -53,10 +64,20 @@ export const updateTask = async (req: AuthRequest, res: Response, next: NextFunc
 		// Only update if the task belongs to the user
 		const existing = await prisma.task.findUnique({ where: { id } });
 		if (!existing || existing.userId !== userId) return next(createError(404, "Task not found"));
+		
 		const { title, description, status, dueDate, priority } = req.body;
+		// Format dueDate as ISO date-time string if it exists
+		const formattedDueDate = dueDate ? new Date(dueDate).toISOString() : undefined;
+		
 		const task = await prisma.task.update({
 			where: { id },
-			data: { title, description, status, dueDate, priority },
+			data: { 
+				title, 
+				description, 
+				status, 
+				dueDate: formattedDueDate, 
+				priority 
+			},
 		});
 		res.json(task);
 	} catch (err) {
