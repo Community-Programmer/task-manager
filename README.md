@@ -9,7 +9,8 @@
 
 A full-stack task management application built with modern web technologies, featuring user authentication, task creation, editing, completion tracking, and priority management.
 
-![Task Manager App Screenshot](https://placehold.co/600x400?text=Task+Manager+App)
+<img width="1892" height="908" alt="image" src="https://github.com/user-attachments/assets/9de01733-b996-4d76-9b73-061c5d853e5f" />
+
 
 ## 🔗 Live Demo
 
