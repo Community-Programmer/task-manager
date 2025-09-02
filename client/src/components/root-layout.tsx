@@ -5,7 +5,7 @@ import { Toaster } from './ui/sonner';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <Provider store={store}>
-            <Toaster />
+            <Toaster richColors />
             {children}
         </Provider>
     );
